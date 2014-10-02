@@ -22,3 +22,5 @@ Select letter with up and down arrow and press enter<br>
 ================
 
 <img src="pacman1.png">
+<img src="pacman2.png">
+<img src="pacman3.png">
