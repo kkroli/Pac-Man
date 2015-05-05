@@ -103,6 +103,9 @@ public class frame extends JFrame implements Runnable, KeyListener{
 	public String subName = "";
 	public int nameLength = 0;
 	
+	/*
+	* Loads up the images for Pacman and the Ghosts.
+	*/
 	public void loadGhost() throws IOException{
 		blink = ImageIO.read(new File("images/blinky.bmp"));
 		blink_right = ImageIO.read(new File("images/blinky_right.bmp"));
@@ -153,8 +156,14 @@ public class frame extends JFrame implements Runnable, KeyListener{
 		 lol = new Logic();
 	}
 	
+	/*
+	* The following determines what to do with the keys pressed depending
+	* if its in menu, when the game starts off or submitting name for high score.
+	*/
 	public void keyPressed(KeyEvent e){
 		int code = e.getKeyCode();
+		
+		// When Game starts
 		if (!menu && lives >= 0){
 			if (code == KeyEvent.VK_UP) buf = "up";
 			if (code == KeyEvent.VK_DOWN) buf = "down";
@@ -172,7 +181,9 @@ public class frame extends JFrame implements Runnable, KeyListener{
 					e1.printStackTrace();
 				}
 			}
-		} else if (!menu && lives < 0){
+		}
+		// when submitting score
+		else if (!menu && lives < 0){
 			if (hssize == 10 && score >= Integer.parseInt(highscore[hssize-1])){		
 				if (code == KeyEvent.VK_UP) letter++;
 				if (code == KeyEvent.VK_DOWN) letter--;
@@ -211,9 +222,11 @@ public class frame extends JFrame implements Runnable, KeyListener{
 				submit = 1;
 			}
 		}
+		// When in menu of high scores
 		else if (highscoremenu){
 			if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_X) highscoremenu = false;
 		}
+		// when in main menu
 		else{
 			if (code == KeyEvent.VK_UP) select--;
 			if (code == KeyEvent.VK_DOWN) select++;
@@ -226,6 +239,7 @@ public class frame extends JFrame implements Runnable, KeyListener{
 	public void keyTyped(KeyEvent e){}
 	public void keyReleased(KeyEvent e){}
 	
+	// The following method resets the position of Pacman and the ghosts
 	public void reset() throws FileNotFoundException{
 		map = getMap("txt/pacmap.txt");
 		pacman = new pac(9*28,18*28);
@@ -257,6 +271,7 @@ public class frame extends JFrame implements Runnable, KeyListener{
 		bonus = 0;
 	}
 	
+	//This loads up the map 
 	public static int[][] getMap(String filename) throws FileNotFoundException{
 		File f = new File(filename);
 		
@@ -320,6 +335,11 @@ public class frame extends JFrame implements Runnable, KeyListener{
 		}
 	}
 	
+	/*
+	* The following method draws up the map according to the data given as well
+	* as the ghosts and pacman according to the direction they should be facing. And all
+	* other code that has to do with displaying the correct image is located in here.
+	*/
 	private Image getFrame() throws IOException {
 		BufferedImage img = new BufferedImage(532, 750, BufferedImage.TYPE_3BYTE_BGR);
 		Graphics g = img.getGraphics();
